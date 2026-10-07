@@ -35,3 +35,18 @@ Copied from [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute) 
 
 **These only work against a running OmniRoute server**, which isn't set up here. OmniRoute is an AI gateway: every
 prompt and piece of code sent through it passes through that server, and it stores your provider API keys.
+
+## Open Generative AI: `open-generative-ai` skill
+
+Built for this pack from [Anil-matcha/Open-Generative-AI](https://github.com/Anil-matcha/Open-Generative-AI) at
+`00132ec` (MIT, see `.claude/skills/open-generative-ai/LICENSE`). That repo is a studio app, not a skill, so this
+skill calls the API the app uses, **MuAPI** (`api.muapi.ai`), directly:
+
+- `SKILL.md`: the submit → poll → download flow, how to build a request, and how to read errors.
+- `references/video-models.md`: 111 text-to-video, 182 image-to-video and 15 lip-sync models (Veo 3.1, Kling 3.0,
+  Sora 2, Seedance 2.0, Hailuo, Wan…), each with its endpoint and allowed aspect ratio, duration, resolution and media
+  fields, generated from the app's `models.js`.
+- `scripts/muapi.mjs`: a dependency-free Node 18+ client (`generate`, `upload`, `result`, `balance`).
+
+**Needs a `MUAPI_API_KEY`, and generations spend MuAPI credits.** Cloud sessions also need `api.muapi.ai` allowed by
+the environment's network policy.
