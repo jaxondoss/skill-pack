@@ -35,3 +35,31 @@ Copied from [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute) 
 
 **These only work against a running OmniRoute server**, which isn't set up here. OmniRoute is an AI gateway: every
 prompt and piece of code sent through it passes through that server, and it stores your provider API keys.
+
+## Design and browser packs
+
+Copied from upstream (no `.git`), licenses kept beside each copy. Skills go in `.claude/skills/`; everything else
+from each repo is kept verbatim in `vendor/<repo>/`. Upstream `CLAUDE.md` files and `.claude/` folders in `vendor/`
+are renamed (`UPSTREAM-CLAUDE.md`, `.claude-upstream/`) so their maintainer instructions don't load in this repo.
+
+| Upstream | Commit | License | Where |
+| --- | --- | --- | --- |
+| [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | `f624f37` | MIT (`.claude/skills/TASTE-SKILL-LICENSE`) | 14 skills in `.claude/skills/`, rest in `vendor/taste-skill/` |
+| [vercel-labs/web-interface-guidelines](https://github.com/vercel-labs/web-interface-guidelines) | `434b7f9` | MIT | `.claude/skills/web-interface-guidelines/` (+ `vendor/`) |
+| [VoltAgent/awesome-design-md](https://github.com/VoltAgent/awesome-design-md) | `3b60532` | MIT | `.claude/skills/design-md-library/` |
+| [microsoft/playwright-cli](https://github.com/microsoft/playwright-cli) | `b85c7a7` | Apache-2.0 | `.claude/skills/playwright-cli/`, rest in `vendor/playwright-cli/` |
+| [hardikvasa/google-images-download](https://github.com/hardikvasa/google-images-download) | `9057dad` | MIT | `vendor/google-images-download/` (not a skill) |
+
+- **taste-skill** (art direction for frontend work): `taste-skill` (`design-taste-frontend`, the main one, with
+  references, a library of researched directions, and scripts), plus `taste-skill-v1`, `taste-skill-v2-experimental`,
+  `gpt-tasteskill`, `soft-skill`, `minimalist-skill`, `brutalist-skill`, `redesign-skill`, `image-to-code-skill`,
+  `imagegen-frontend-web`, `imagegen-frontend-mobile`, `brandkit`, `stitch-skill`, `output-skill`. Its scripts are
+  optional Node tools: `inspect.mjs` launches a local Chromium to check a page; `assets.mjs` fetches images from open
+  collections.
+- **web-interface-guidelines** and **design-md-library** don't ship a `SKILL.md` upstream; each has a short wrapper
+  `SKILL.md` here that points at the unchanged upstream files.
+- **playwright-cli** needs the `playwright-cli` command (`npm install -g @playwright/cli`), which isn't installed by
+  this repo.
+- **google-images-download** is a Python library and CLI that scrapes Google Images, kept for reference only. It
+  isn't installed, depends on Google's page markup (the upstream project has long been unmaintained and often
+  breaks), and scraping may conflict with Google's terms.
