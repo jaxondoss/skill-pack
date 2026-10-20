@@ -104,3 +104,16 @@ was enabled, `.claude/settings.json` is unchanged.
   `npx @superdesign/cli@latest login`. The old IDE extension in `vendor/superdesign/` is archived and is never to be
   run: its defaults route prompts through the maintainers' logging proxy and start the claude CLI with permissions
   skipped.
+
+## effortless (Claude Code mod, reference copy, not enabled)
+
+[HeyCubit/effortless](https://github.com/HeyCubit/effortless) (`df5602e`, MIT, v1.71.0) picks the reasoning effort for
+every prompt (Low for quick questions, High for hard jobs), shows a bar above the prompt with context fullness and how
+long the prompt cache stays warm, offers one-click Handoff or compact, and summarizes compaction with Haiku 5.5. Its
+code (without the website, docs media and the separate textless mod) is in `vendor/effortless/` for reference.
+
+It is a plugin with a hooks module (`hooks/register.tsx`) that runs on every prompt, so it is not enabled here. It
+sends each prompt to the judge: Haiku on your own Claude login by default; the optional `jev` judge sends prompts to
+TypeSafe (`api.typesafe.ai`) only if you add a key. Cheaper-model switching is experimental and off by default. It also
+checks GitHub for updates. To use it, run `claude plugin marketplace add HeyCubit/effortless` and
+`claude plugin install effortless@effortless`, then `/reload-plugins`; settings via `/effortless settings`.
