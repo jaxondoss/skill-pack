@@ -5,9 +5,16 @@
         "source": "github",
         "repo": "ruvnet/ruflo"
       }
+    },
+    "effortless": {
+      "source": {
+        "source": "github",
+        "repo": "HeyCubit/effortless"
+      }
     }
   },
   "enabledPlugins": {
-    "ruflo-core@ruflo": true
+    "ruflo-core@ruflo": true,
+    "effortless@effortless": true
   }
 }
