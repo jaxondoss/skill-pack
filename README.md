@@ -63,3 +63,44 @@ are renamed (`UPSTREAM-CLAUDE.md`, `.claude-upstream/`) so their maintainer inst
 - **google-images-download** is a Python library and CLI that scrapes Google Images, kept for reference only. It
   isn't installed, depends on Google's page markup (the upstream project has long been unmaintained and often
   breaks), and scraping may conflict with Google's terms.
+
+## Process, security and pixel-art packs (2026-10-20)
+
+Same convention as above: upstream copied without `.git`, licenses beside each copy, skills in `.claude/skills/`,
+everything else in `vendor/<repo>/`, upstream `CLAUDE.md` renamed `UPSTREAM-CLAUDE.md`. Nothing was run, no plugin
+was enabled, `.claude/settings.json` is unchanged.
+
+| Upstream | Commit | License | Where |
+| --- | --- | --- | --- |
+| [obra/superpowers](https://github.com/obra/superpowers) | `bb92a77` | MIT | 14 skills in `.claude/skills/`, rest in `vendor/superpowers/` |
+| [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | `2c60614` | MIT (declared; no license text upstream, see `LICENSE-NOTE.md`) | `.claude/skills/karpathy-guidelines/` (+ `vendor/`) |
+| [trailofbits/skills](https://github.com/trailofbits/skills) | `5c99c03` | CC BY-SA 4.0 (`ATTRIBUTION.md` in each skill) | 9 skills in `.claude/skills/`, whole marketplace in `vendor/trailofbits-skills/` |
+| [Gamezxz/pixel-art-studio](https://github.com/Gamezxz/pixel-art-studio) | `f8c2466` | MIT | `.claude/skills/pixel-art-studio/` (+ `vendor/`) |
+| [superdesigndev/superdesign-skill](https://github.com/superdesigndev/superdesign-skill) | `f9f05cd` | MIT | `vendor/superdesign-skill/`, plus a ready copy in `vendor/superdesign-skill-disabled/` (not active) |
+| [superdesigndev/superdesign](https://github.com/superdesigndev/superdesign) | `49e2b9d` | Super Design License (mostly AGPL-3.0) | `vendor/superdesign/` (reference only) |
+
+- **superpowers**: process skills (brainstorming, writing-plans, executing-plans, subagent-driven-development,
+  test-driven-development, systematic-debugging, requesting/receiving-code-review, verification-before-completion,
+  using-git-worktrees, finishing-a-development-branch, dispatching-parallel-agents, writing-skills,
+  diagnosing-superpowers). Left out on purpose: the `using-superpowers` skill and the SessionStart hook, which make the
+  agent invoke a skill before every reply in every session. The skills still mention each other as
+  `superpowers:<name>`; here they are unnamespaced. Some skills tell the agent to run long plans without checking in,
+  and `using-git-worktrees` runs dependency installs. The brainstorming visual companion loads a logo from
+  primeradiant.com (set `SUPERPOWERS_DISABLE_TELEMETRY=1` to stop it).
+- **karpathy-guidelines**: four coding-behaviour rules (think before coding, simplicity first, surgical changes,
+  goal-driven execution). Markdown only.
+- **Trail of Bits**: differential-review, sharp-edges, supply-chain-risk-auditor (queries package registries and
+  advisory databases), codeql, semgrep, sarif-parsing (the static-analysis plugin; CodeQL and Semgrep must be
+  installed to scan), property-based-testing, fp-check, agentic-actions-auditor. Not copied as skills: insecure-defaults
+  (it ships commands and workflows, no skill), gh-cli (its hooks redirect web fetches to the gh CLI), and the smart
+  contract, C/C++, Rust, firmware and other plugins. The plugins' agents and hooks are not active.
+- **pixel-art-studio**: Claude draws pixel art through Python/Pillow build scripts (`scripts/pixelstudio.py`), with a
+  see, critique, fix loop, palette locking and `pixelpipe.py` to clean generated images. Needs Pillow only. See
+  `LOCAL-NOTES.md` for the scripts path in this pack.
+- **superdesign**: the current skill drives the hosted superdesign.dev service. It needs a superdesign.dev login and
+  credits, uploads UI source files, prompts and your messages (stored server-side), writes a `.superdesign/` folder into
+  the project, runs setup on its own, and requires designing on its canvas before UI code. It is therefore **not
+  active**. To turn it on, move `vendor/superdesign-skill-disabled/` to `.claude/skills/superdesign/` and run
+  `npx @superdesign/cli@latest login`. The old IDE extension in `vendor/superdesign/` is archived and is never to be
+  run: its defaults route prompts through the maintainers' logging proxy and start the claude CLI with permissions
+  skipped.
